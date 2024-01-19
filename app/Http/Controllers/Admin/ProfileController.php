@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 //DB利用追記
 use App\Models\Profile;
+use App\Models\ProfileHistory;
+// 以下を追記 日付操作ライブラリ
+use Carbon\Carbon;
+
 
 class ProfileController extends Controller
 {
@@ -65,8 +69,17 @@ class ProfileController extends Controller
 
         // 該当するデータを上書きして保存する
         $profile->fill($profile_form)->save();
+        
+        // 以下を追記
+        $history = new ProfileHistory();
+        $history->profile_id = $profile->id;
+        $history->edited_at = Carbon::now();
+        $history->save();
 
-           //return redirect('admin/profile/edit');
-           return redirect('admin/profile/edit');
+        //2024.1.14変更
+        //return redirect('admin/profile/edit');
+        return view('admin.profile.edit', ['profile_form' => $profile]);
+
+
     }
 }
