@@ -20,6 +20,7 @@ body {
 
 .table-dark {
   color: #fff;
+  overflow-wrap: break-word;
 }
 
 .list-group-item {

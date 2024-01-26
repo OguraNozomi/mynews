@@ -49,11 +49,24 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
          // Profile Modelからデータを取得する
-        $profile = Profile::find($request->id);
-        if (empty($profile)) {
-            abort(404);
+        // $profile = Profile::find($request->id);
+        // if (empty($profile)) {
+        //     abort(404);
+        // }
+        
+        //20240126変更
+        //Profile Modelからデータを取得する
+        $profile_all = Profile::all()->sortByDesc('updated_at');
+        if (empty($profile_all)) {
+            //abort(404);
+            //データがない場合は追加画面
+            return view('admin.profile.create');
+        }else {
+             $profile = $profile_all->shift();
+       
+        
+            return view('admin.profile.edit', ['profile_form' => $profile]);
         }
-        return view('admin.profile.edit', ['profile_form' => $profile]);
     }
     
     public function update(Request $request)
