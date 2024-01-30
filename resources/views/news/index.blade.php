@@ -52,6 +52,7 @@
                     </div>
                     <hr color="#c0c0c0">
                 @endforeach
+                 <p>{{ \Carbon\Carbon::now() }}</p>
             </div>
         </div>
     </div>
